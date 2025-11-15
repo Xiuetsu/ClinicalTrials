@@ -1,0 +1,9 @@
+node_modules
+pnpm-lock.yaml
+dist
+src-tauri/target
+src-tauri/.cargo
+database.db
+.DS_Store
+.idea
+.vscode

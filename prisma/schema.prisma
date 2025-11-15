@@ -1,0 +1,65 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = "file:trialtracker.db"
+}
+
+model Trial {
+  id                    String    @id @default(cuid())
+  nctId                 String    @unique
+  title                 String
+  briefSummary          String?
+  status                String
+  phase                 String?
+  conditions            String
+  sponsor               String
+  ticker                String?
+  isMajorSponsor        Boolean   @default(false)
+  startDate             DateTime?
+  primaryCompletion     DateTime?
+  completionDate        DateTime?
+  enrollment            Int?
+  compensation          String?
+  duration              String?
+  eligibilityAge        String?
+  eligibilityGender     String?
+  inclusionCriteria     String?
+  exclusionCriteria     String?
+  treatmentAlternatives String?
+  riskBenefitSummary    String?
+  url                   String
+  pdufaDate             DateTime?
+  fastTrack             Boolean   @default(false)
+  orphanDrug            Boolean   @default(false)
+  historicalWinRate     Float?
+  secFilingUrl          String?
+  earningsMention       String?
+  patentExpiration      DateTime?
+  fdaWarning            Boolean   @default(false)
+  competitorOverlaps    String?
+  pipelineHeatmap       String?
+  enrollmentBenchmark   Float?
+  lastUpdated           DateTime  @updatedAt
+  locations             Location[]
+  watchlists            Watchlist[]
+}
+
+model Location {
+  id      String  @id @default(cuid())
+  trialId String
+  trial   Trial   @relation(fields: [trialId], references: [id])
+  city    String?
+  state   String?
+  country String
+}
+
+model Watchlist {
+  id      String   @id @default(cuid())
+  trialId String
+  trial   Trial    @relation(fields: [trialId], references: [id])
+  addedAt DateTime @default(now())
+  notes   String?
+}
